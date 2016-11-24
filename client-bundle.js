@@ -46,6 +46,10 @@
 
 	'use strict';
 	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	__webpack_require__(1);
 	
 	var _react = __webpack_require__(298);
@@ -60,74 +64,25 @@
 	
 	var _nav2 = _interopRequireDefault(_nav);
 	
+	var _header = __webpack_require__(469);
+	
+	var _header2 = _interopRequireDefault(_header);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var nav = new _nav2.default('Sean Plus Plus').main();
-	var links = [];
-	for (var i = 0, j = nav.links.length; i < j; i += 1) {
-	  links.push(_react2.default.createElement(
-	    'li',
-	    { key: i },
-	    _react2.default.createElement(
-	      'a',
-	      { className: 'page-scroll', href: '#' + nav.links[i] },
-	      nav.links[i]
-	    )
-	  ));
-	}
-	
-	var App = function App(props) {
+	function App() {
 	  return _react2.default.createElement(
 	    'div',
 	    null,
-	    _react2.default.createElement(
-	      'nav',
-	      { id: 'mainNav', className: 'navbar navbar-default navbar-fixed-top' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'navbar-header' },
-	          _react2.default.createElement(
-	            'button',
-	            {
-	              className: 'navbar-toggle collapsed',
-	              'data-toggle': 'collapse', 'data-target': '#bs-example-navbar-collapse-1'
-	            },
-	            _react2.default.createElement(
-	              'span',
-	              { className: 'sr-only' },
-	              'Toggle navigation'
-	            ),
-	            ' Menu ',
-	            _react2.default.createElement('i', { className: 'fa fa-bars' })
-	          ),
-	          _react2.default.createElement(
-	            'a',
-	            { className: 'navbar-brand page-scroll', href: '#page-top' },
-	            props.data.title
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
-	          _react2.default.createElement(
-	            'ul',
-	            { className: 'nav navbar-nav navbar-right' },
-	            links
-	          )
-	        )
-	      )
-	    )
+	    _react2.default.createElement(_nav2.default, null),
+	    _react2.default.createElement(_header2.default, null)
 	  );
-	};
+	}
 	
-	App.propTypes = {
-	  data: _react.PropTypes.object.isRequired
-	};
+	exports.default = App;
 	
-	_reactDom2.default.render(_react2.default.createElement(App, { data: nav }), document.querySelector('.app'));
+	
+	_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('.app'));
 
 /***/ },
 /* 1 */
@@ -29437,7 +29392,7 @@
 
 /***/ },
 /* 468 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
 	
@@ -29447,29 +29402,199 @@
 	
 	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 	
+	var _react = __webpack_require__(298);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
-	var Nav = function () {
-	  function Nav(title) {
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Nav = function (_React$Component) {
+	  _inherits(Nav, _React$Component);
+	
+	  function Nav() {
 	    _classCallCheck(this, Nav);
 	
-	    this.title = title;
+	    var _this = _possibleConstructorReturn(this, (Nav.__proto__ || Object.getPrototypeOf(Nav)).call(this));
+	
+	    _this.state = {
+	      title: 'SeanPlusPlus',
+	      menu: ['download', 'features', 'contact']
+	    };
+	    return _this;
 	  }
 	
 	  _createClass(Nav, [{
-	    key: 'main',
-	    value: function main() {
-	      return {
-	        title: this.title,
-	        links: ['download', 'features', 'contact']
-	      };
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'nav',
+	        { id: 'mainNav', className: 'navbar navbar-default navbar-fixed-top' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'navbar-header' },
+	            _react2.default.createElement(
+	              'button',
+	              {
+	                className: 'navbar-toggle collapsed',
+	                'data-toggle': 'collapse',
+	                'data-target': '#bs-example-navbar-collapse-1'
+	              },
+	              _react2.default.createElement(
+	                'span',
+	                { className: 'sr-only' },
+	                'Toggle navigation'
+	              ),
+	              ' Menu ',
+	              _react2.default.createElement('i', { className: 'fa fa-bars' })
+	            ),
+	            _react2.default.createElement(
+	              'a',
+	              { className: 'navbar-brand page-scroll', href: '#page-top' },
+	              this.state.title
+	            )
+	          ),
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'collapse navbar-collapse', id: 'bs-example-navbar-collapse-1' },
+	            _react2.default.createElement(
+	              'ul',
+	              { className: 'nav navbar-nav navbar-right' },
+	              this.state.menu.map(function (m) {
+	                return _react2.default.createElement(
+	                  'li',
+	                  { key: m },
+	                  _react2.default.createElement(
+	                    'a',
+	                    { className: 'page-scroll', href: '#' + m },
+	                    m
+	                  )
+	                );
+	              })
+	            )
+	          )
+	        )
+	      );
 	    }
 	  }]);
 	
 	  return Nav;
-	}();
+	}(_react2.default.Component);
 	
 	exports.default = Nav;
+
+/***/ },
+/* 469 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(298);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Header = function (_React$Component) {
+	  _inherits(Header, _React$Component);
+	
+	  function Header() {
+	    _classCallCheck(this, Header);
+	
+	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this));
+	
+	    _this.state = {
+	      title: 'SeanPlusPlus',
+	      menu: ['download', 'features', 'contact']
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Header, [{
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement(
+	        'header',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-7' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'header-content' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'header-content-inner' },
+	                  _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    'Yo Dude Description Here!'
+	                  ),
+	                  _react2.default.createElement(
+	                    'a',
+	                    { href: '#download', className: 'btn btn-outline btn-xl page-scroll' },
+	                    'Start Now for Free!'
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-5' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'device-container' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'device-mockup iphone6_plus portrait white' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'device' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'screen' },
+	                      _react2.default.createElement('img', { src: 'img/demo-screen-1.jpg', className: 'img-responsive', alt: '' })
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Header;
+	}(_react2.default.Component);
+	
+	exports.default = Header;
 
 /***/ }
 /******/ ]);

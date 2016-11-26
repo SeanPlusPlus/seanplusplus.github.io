@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli">
     <link rel="stylesheet" href="css/new-age.min.css">
     <link rel="stylesheet" href="css/device-mockups.min.css">
+    <link rel="stylesheet" href="css/simple-line-icons.css">
   </head>
   <body id="page-top">
     <!--[if lt IE 8]>
@@ -23,24 +24,24 @@
       </p>
     <![endif]-->
     <div class="app"></div>
+    <script src="app.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    <script src="client-bundle.js"></script>
     <script>
       (function($) {
+        // Highlight the top nav as scrolling occurs
         $('body').scrollspy({
           target: '.navbar-fixed-top',
           offset: 100,
         });
-        $('.navbar-collapse ul li a').click( function() {
+
+        // Closes the Responsive Menu on Menu Item Click
+        $('.navbar-collapse ul li a').click(function() {
           $('.navbar-toggle:visible').click();
-        });
-        $('#mainNav').affix({
-          offset: {
-            top: 50,
-          },
         });
       })(jQuery);
     </script>
+
   </body>
 </html>

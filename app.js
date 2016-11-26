@@ -29458,12 +29458,31 @@
 	    _this.state = {
 	      title: 'SeanPlusPlus',
 	      menu: ['download', 'features', 'contact'],
-	      scroll: _reactScroll2.default.animateScroll
+	      scroll: _reactScroll2.default.animateScroll,
+	      scrollspy: _reactScroll2.default.scrollspy
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(Nav, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      var navbar = (0, _jquery2.default)('.navbar');
+	      function scrollNav() {
+	        if ((0, _jquery2.default)(window).scrollTop() <= 40) {
+	          navbar.addClass('affix-top').removeClass('affix');
+	        } else {
+	          navbar.addClass('affix').removeClass('affix-top');
+	        }
+	      }
+	      (0, _jquery2.default)(window).scroll(scrollNav);
+	
+	      // $('body').scrollspy({
+	      //   target: '.navbar-fixed-top',
+	      //   offset: 100,
+	      // });
+	    }
+	  }, {
 	    key: 'handleClick',
 	    value: function handleClick(e) {
 	      e.preventDefault();
@@ -29500,7 +29519,13 @@
 	            ),
 	            _react2.default.createElement(
 	              'a',
-	              { className: 'navbar-brand page-scroll', href: '#page-top' },
+	              {
+	                onClick: function onClick(e) {
+	                  return _this2.handleClick(e);
+	                },
+	                className: 'navbar-brand page-scroll',
+	                href: '#page-top'
+	              },
 	              this.state.title
 	            )
 	          ),
@@ -29516,7 +29541,7 @@
 	                  { key: m },
 	                  _react2.default.createElement(
 	                    'a',
-	                    { className: 'page-scroll', onClick: function onClick(e) {
+	                    { onClick: function onClick(e) {
 	                        return _this2.handleClick(e);
 	                      }, href: '#' + m },
 	                    m
@@ -41363,6 +41388,14 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _reactScroll = __webpack_require__(469);
+	
+	var _reactScroll2 = _interopRequireDefault(_reactScroll);
+	
+	var _jquery = __webpack_require__(481);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41380,15 +41413,42 @@
 	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this));
 	
 	    _this.state = {
-	      title: 'SeanPlusPlus',
-	      menu: ['download', 'features', 'contact']
+	      scroll: _reactScroll2.default.animateScroll,
+	      message: null
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(Header, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetch();
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch() {
+	      var _this2 = this;
+	
+	      var url = '/data.json';
+	      var obj = {
+	        url: url
+	      };
+	      var xhr = _jquery2.default.ajax(obj);
+	      xhr.done(function (data) {
+	        return _this2.setState({ message: data.message });
+	      });
+	    }
+	  }, {
+	    key: 'handleClick',
+	    value: function handleClick(e) {
+	      e.preventDefault();
+	      this.state.scroll.scrollTo((0, _jquery2.default)(e.target.hash).offset().top);
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
 	      return _react2.default.createElement(
 	        'header',
 	        null,
@@ -41410,11 +41470,17 @@
 	                  _react2.default.createElement(
 	                    'h1',
 	                    null,
-	                    'Yo Dude Description Here!'
+	                    this.state.message
 	                  ),
 	                  _react2.default.createElement(
 	                    'a',
-	                    { href: '#download', className: 'btn btn-outline btn-xl page-scroll' },
+	                    {
+	                      onClick: function onClick(e) {
+	                        return _this3.handleClick(e);
+	                      },
+	                      href: '#download',
+	                      className: 'btn btn-outline btn-xl page-scroll'
+	                    },
 	                    'Start Now for Free!'
 	                  )
 	                )
@@ -41485,7 +41551,7 @@
 	    var _this = _possibleConstructorReturn(this, (Download.__proto__ || Object.getPrototypeOf(Download)).call(this));
 	
 	    _this.state = {
-	      title: 'SeanPlusPlus',
+	      title: 'download',
 	      menu: ['download', 'features', 'contact']
 	    };
 	    return _this;
@@ -41496,7 +41562,11 @@
 	    value: function render() {
 	      return _react2.default.createElement(
 	        'section',
-	        { id: 'download', name: 'download', className: 'download bg-primary text-center' },
+	        {
+	          id: 'download',
+	          ref: this.state.title,
+	          className: 'download bg-primary text-center'
+	        },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'container' },
@@ -42012,4 +42082,4 @@
 
 /***/ }
 /******/ ]);
-//# sourceMappingURL=client-bundle.js.map
+//# sourceMappingURL=app.js.map

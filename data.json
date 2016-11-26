@@ -1,3 +1,27 @@
 {
-  "message": "Hello World"
+  "header": {
+    "message": "Hello World!"
+  },
+  "features": [
+    {
+      "title": "Device Mockups",
+      "text": "Ready to use HTML/CSS device mockups, no Photoshop required!",
+      "icon": "screen-smartphone"
+    },
+    {
+      "title": "Flexible Use",
+      "text": "Put an image, video, animation, or anything else in the screen!",
+      "icon": "camera"
+    },
+    {
+      "title": "Free to Use",
+      "text": "As always, this theme is free to download and use for any purpose!",
+      "icon": "present"
+    },
+    {
+      "title": "Open Source",
+      "text": "Since this theme is MIT licensed, you can use it commercially!",
+      "icon": "lock-open"
+    },
+  ]
 }

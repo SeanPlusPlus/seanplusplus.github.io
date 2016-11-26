@@ -41435,7 +41435,7 @@
 	      };
 	      var xhr = _jquery2.default.ajax(obj);
 	      xhr.done(function (data) {
-	        return _this2.setState({ message: data.message });
+	        return _this2.setState({ message: data.header.message });
 	      });
 	    }
 	  }, {
@@ -41628,6 +41628,10 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
+	var _jquery = __webpack_require__(481);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -41645,13 +41649,31 @@
 	    var _this = _possibleConstructorReturn(this, (Features.__proto__ || Object.getPrototypeOf(Features)).call(this));
 	
 	    _this.state = {
-	      title: 'SeanPlusPlus',
-	      menu: ['download', 'features', 'contact']
+	      features: []
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(Features, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetch();
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch() {
+	      var _this2 = this;
+	
+	      var url = '/data.json';
+	      var obj = {
+	        url: url
+	      };
+	      var xhr = _jquery2.default.ajax(obj);
+	      xhr.done(function (data) {
+	        return _this2.setState({ features: data.features });
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      return _react2.default.createElement(
@@ -41701,8 +41723,7 @@
 	                    _react2.default.createElement(
 	                      'div',
 	                      { className: 'screen' },
-	                      _react2.default.createElement('img', { src: 'img/demo-screen-1.jpg', className: 'img-responsive', alt: '' }),
-	                      ' '
+	                      _react2.default.createElement('img', { src: 'img/demo-screen-1.jpg', className: 'img-responsive', alt: '' })
 	                    )
 	                  )
 	                )
@@ -41717,86 +41738,27 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'row' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-md-6' },
-	                    _react2.default.createElement(
+	                  this.state.features.map(function (f) {
+	                    return _react2.default.createElement(
 	                      'div',
-	                      { className: 'feature-item' },
-	                      _react2.default.createElement('i', { className: 'icon-screen-smartphone text-primary' }),
+	                      { key: f.title, className: 'col-md-6' },
 	                      _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Device Mockups'
-	                      ),
-	                      _react2.default.createElement(
-	                        'p',
-	                        { className: 'text-muted' },
-	                        'Ready to use HTML/CSS device mockups, no Photoshop required!'
+	                        'div',
+	                        { className: 'feature-item' },
+	                        _react2.default.createElement('i', { className: 'icon-' + f.icon + ' text-primary' }),
+	                        _react2.default.createElement(
+	                          'h3',
+	                          null,
+	                          f.title
+	                        ),
+	                        _react2.default.createElement(
+	                          'p',
+	                          { className: 'text-muted' },
+	                          f.text
+	                        )
 	                      )
-	                    )
-	                  ),
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-md-6' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'feature-item' },
-	                      _react2.default.createElement('i', { className: 'icon-camera text-primary' }),
-	                      _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Flexible Use'
-	                      ),
-	                      _react2.default.createElement(
-	                        'p',
-	                        { className: 'text-muted' },
-	                        'Put an image, video, animation, or anything else in the screen!'
-	                      )
-	                    )
-	                  )
-	                ),
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'row' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-md-6' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'feature-item' },
-	                      _react2.default.createElement('i', { className: 'icon-present text-primary' }),
-	                      _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Free to Use'
-	                      ),
-	                      _react2.default.createElement(
-	                        'p',
-	                        { className: 'text-muted' },
-	                        'As always, this theme is free to download and use for any purpose!'
-	                      )
-	                    )
-	                  ),
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'col-md-6' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'feature-item' },
-	                      _react2.default.createElement('i', { className: 'icon-lock-open text-primary' }),
-	                      _react2.default.createElement(
-	                        'h3',
-	                        null,
-	                        'Open Source'
-	                      ),
-	                      _react2.default.createElement(
-	                        'p',
-	                        { className: 'text-muted' },
-	                        'Since this theme is MIT licensed, you can use it commercially!'
-	                      )
-	                    )
-	                  )
+	                    );
+	                  })
 	                )
 	              )
 	            )

@@ -41649,7 +41649,10 @@
 	    var _this = _possibleConstructorReturn(this, (Features.__proto__ || Object.getPrototypeOf(Features)).call(this));
 	
 	    _this.state = {
-	      features: []
+	      features: {
+	        top: [],
+	        bottom: []
+	      }
 	    };
 	    return _this;
 	  }
@@ -41738,10 +41741,35 @@
 	                _react2.default.createElement(
 	                  'div',
 	                  { className: 'row' },
-	                  this.state.features.map(function (f) {
+	                  this.state.features.top.map(function (f) {
 	                    return _react2.default.createElement(
 	                      'div',
-	                      { key: f.title, className: 'col-md-6' },
+	                      { key: f.icon, className: 'col-md-6' },
+	                      _react2.default.createElement(
+	                        'div',
+	                        { className: 'feature-item' },
+	                        _react2.default.createElement('i', { className: 'icon-' + f.icon + ' text-primary' }),
+	                        _react2.default.createElement(
+	                          'h3',
+	                          null,
+	                          f.title
+	                        ),
+	                        _react2.default.createElement(
+	                          'p',
+	                          { className: 'text-muted' },
+	                          f.text
+	                        )
+	                      )
+	                    );
+	                  })
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'row' },
+	                  this.state.features.bottom.map(function (f) {
+	                    return _react2.default.createElement(
+	                      'div',
+	                      { key: f.icon, className: 'col-md-6' },
 	                      _react2.default.createElement(
 	                        'div',
 	                        { className: 'feature-item' },

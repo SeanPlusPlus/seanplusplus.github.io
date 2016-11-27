@@ -64,7 +64,7 @@
 	
 	var _nav2 = _interopRequireDefault(_nav);
 	
-	var _header = __webpack_require__(482);
+	var _header = __webpack_require__(469);
 	
 	var _header2 = _interopRequireDefault(_header);
 	
@@ -29431,14 +29431,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactScroll = __webpack_require__(469);
-	
-	var _reactScroll2 = _interopRequireDefault(_reactScroll);
-	
-	var _jquery = __webpack_require__(481);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -29457,42 +29449,14 @@
 	
 	    _this.state = {
 	      title: 'SeanPlusPlus',
-	      menu: ['download', 'features', 'contact'],
-	      scroll: _reactScroll2.default.animateScroll,
-	      scrollspy: _reactScroll2.default.scrollspy
+	      menu: ['download', 'features', 'contact']
 	    };
 	    return _this;
 	  }
 	
 	  _createClass(Nav, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      var navbar = (0, _jquery2.default)('.navbar');
-	      function scrollNav() {
-	        if ((0, _jquery2.default)(window).scrollTop() <= 40) {
-	          navbar.addClass('affix-top').removeClass('affix');
-	        } else {
-	          navbar.addClass('affix').removeClass('affix-top');
-	        }
-	      }
-	      (0, _jquery2.default)(window).scroll(scrollNav);
-	
-	      // $('body').scrollspy({
-	      //   target: '.navbar-fixed-top',
-	      //   offset: 100,
-	      // });
-	    }
-	  }, {
-	    key: 'handleClick',
-	    value: function handleClick(e) {
-	      e.preventDefault();
-	      this.state.scroll.scrollTo((0, _jquery2.default)(e.target.hash).offset().top);
-	    }
-	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this2 = this;
-	
 	      return _react2.default.createElement(
 	        'nav',
 	        { id: 'mainNav', className: 'navbar navbar-default navbar-fixed-top' },
@@ -29520,9 +29484,6 @@
 	            _react2.default.createElement(
 	              'a',
 	              {
-	                onClick: function onClick(e) {
-	                  return _this2.handleClick(e);
-	                },
 	                className: 'navbar-brand page-scroll',
 	                href: '#page-top'
 	              },
@@ -29541,9 +29502,7 @@
 	                  { key: m },
 	                  _react2.default.createElement(
 	                    'a',
-	                    { onClick: function onClick(e) {
-	                        return _this2.handleClick(e);
-	                      }, href: '#' + m },
+	                    { className: 'page-scroll', href: '#' + m },
 	                    m
 	                  )
 	                );
@@ -29564,24 +29523,170 @@
 /* 469 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports.Link = __webpack_require__(470);
-	exports.Button = __webpack_require__(479);
-	exports.Element = __webpack_require__(480);
-	exports.Helpers = __webpack_require__(471);
-	exports.scroller = __webpack_require__(478);
-	exports.Events = __webpack_require__(476);
-	exports.scrollSpy = __webpack_require__(477);
-	exports.animateScroll = __webpack_require__(472);
-
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(298);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactScroll = __webpack_require__(470);
+	
+	var _reactScroll2 = _interopRequireDefault(_reactScroll);
+	
+	var _jquery = __webpack_require__(482);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var Header = function (_React$Component) {
+	  _inherits(Header, _React$Component);
+	
+	  function Header() {
+	    _classCallCheck(this, Header);
+	
+	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this));
+	
+	    _this.state = {
+	      scroll: _reactScroll2.default.animateScroll,
+	      message: null
+	    };
+	    return _this;
+	  }
+	
+	  _createClass(Header, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.fetch();
+	    }
+	  }, {
+	    key: 'fetch',
+	    value: function fetch() {
+	      var _this2 = this;
+	
+	      var url = '/data.json';
+	      var obj = {
+	        url: url
+	      };
+	      var xhr = _jquery2.default.ajax(obj);
+	      xhr.done(function (data) {
+	        return _this2.setState({ message: data.header.message });
+	      });
+	    }
+	  }, {
+	    key: 'handleClick',
+	    value: function handleClick(e) {
+	      e.preventDefault();
+	      this.state.scroll.scrollTo((0, _jquery2.default)(e.target.hash).offset().top);
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      var _this3 = this;
+	
+	      return _react2.default.createElement(
+	        'header',
+	        null,
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'container' },
+	          _react2.default.createElement(
+	            'div',
+	            { className: 'row' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-7' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'header-content' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'header-content-inner' },
+	                  _react2.default.createElement(
+	                    'h1',
+	                    null,
+	                    this.state.message
+	                  ),
+	                  _react2.default.createElement(
+	                    'a',
+	                    {
+	                      onClick: function onClick(e) {
+	                        return _this3.handleClick(e);
+	                      },
+	                      href: '#download',
+	                      className: 'btn btn-outline btn-xl page-scroll'
+	                    },
+	                    'Start Now for Free!'
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'col-sm-5' },
+	              _react2.default.createElement(
+	                'div',
+	                { className: 'device-container' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'device-mockup iphone6_plus portrait white' },
+	                  _react2.default.createElement(
+	                    'div',
+	                    { className: 'device' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'screen' },
+	                      _react2.default.createElement('img', { src: 'img/demo-screen-1.jpg', className: 'img-responsive', alt: '' })
+	                    )
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      );
+	    }
+	  }]);
+	
+	  return Header;
+	}(_react2.default.Component);
+	
+	exports.default = Header;
 
 /***/ },
 /* 470 */
 /***/ function(module, exports, __webpack_require__) {
 
+	exports.Link = __webpack_require__(471);
+	exports.Button = __webpack_require__(480);
+	exports.Element = __webpack_require__(481);
+	exports.Helpers = __webpack_require__(472);
+	exports.scroller = __webpack_require__(479);
+	exports.Events = __webpack_require__(477);
+	exports.scrollSpy = __webpack_require__(478);
+	exports.animateScroll = __webpack_require__(473);
+
+
+/***/ },
+/* 471 */
+/***/ function(module, exports, __webpack_require__) {
+
 	"use strict";
 	
 	var React = __webpack_require__(298);
-	var Helpers = __webpack_require__(471);
+	var Helpers = __webpack_require__(472);
 	
 	var Link = React.createClass({
 	  render: function () {
@@ -29593,7 +29698,7 @@
 
 
 /***/ },
-/* 471 */
+/* 472 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
@@ -29601,9 +29706,9 @@
 	var React = __webpack_require__(298);
 	var ReactDOM = __webpack_require__(330);
 	
-	var animateScroll = __webpack_require__(472);
-	var scrollSpy = __webpack_require__(477);
-	var defaultScroller = __webpack_require__(478);
+	var animateScroll = __webpack_require__(473);
+	var scrollSpy = __webpack_require__(478);
+	var defaultScroller = __webpack_require__(479);
 	var assign = __webpack_require__(300);
 	
 	
@@ -29824,18 +29929,18 @@
 
 
 /***/ },
-/* 472 */
+/* 473 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assign = __webpack_require__(300);
 	
-	var smooth = __webpack_require__(473);
+	var smooth = __webpack_require__(474);
 	
 	var easing = smooth.defaultEasing;
 	
-	var cancelEvents = __webpack_require__(474);
+	var cancelEvents = __webpack_require__(475);
 	
-	var events = __webpack_require__(476);
+	var events = __webpack_require__(477);
 	
 	/*
 	 * Function helper
@@ -30019,7 +30124,7 @@
 
 
 /***/ },
-/* 473 */
+/* 474 */
 /***/ function(module, exports) {
 
 	module.exports = {
@@ -30037,10 +30142,10 @@
 	}
 
 /***/ },
-/* 474 */
+/* 475 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var addPassiveEventListener = __webpack_require__(475);
+	var addPassiveEventListener = __webpack_require__(476);
 	
 	var events = ['mousedown', 'mousewheel', 'touchmove', 'keydown']
 	
@@ -30058,7 +30163,7 @@
 
 
 /***/ },
-/* 475 */
+/* 476 */
 /***/ function(module, exports) {
 
 	/*
@@ -30087,7 +30192,7 @@
 
 
 /***/ },
-/* 476 */
+/* 477 */
 /***/ function(module, exports) {
 
 	
@@ -30106,10 +30211,10 @@
 	module.exports = Events;
 
 /***/ },
-/* 477 */
+/* 478 */
 /***/ function(module, exports, __webpack_require__) {
 
-	var addPassiveEventListener = __webpack_require__(475);
+	var addPassiveEventListener = __webpack_require__(476);
 	
 	var eventThrottler = function(eventHandler) {
 	  var eventHandlerTimeout;
@@ -30213,13 +30318,13 @@
 
 
 /***/ },
-/* 478 */
+/* 479 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var assign = __webpack_require__(300);
 	
-	var animateScroll = __webpack_require__(472);
-	var events = __webpack_require__(476);
+	var animateScroll = __webpack_require__(473);
+	var events = __webpack_require__(477);
 	
 	var __mapped = {};
 	var __activeLink;
@@ -30323,13 +30428,13 @@
 
 
 /***/ },
-/* 479 */
+/* 480 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(298);
-	var Helpers = __webpack_require__(471);
+	var Helpers = __webpack_require__(472);
 	
 	var Button = React.createClass({
 	  render: function () {
@@ -30341,13 +30446,13 @@
 
 
 /***/ },
-/* 480 */
+/* 481 */
 /***/ function(module, exports, __webpack_require__) {
 
 	"use strict";
 	
 	var React = __webpack_require__(298);
-	var Helpers = __webpack_require__(471);
+	var Helpers = __webpack_require__(472);
 	
 	var Element = React.createClass({
 	  render: function () {
@@ -30359,7 +30464,7 @@
 
 
 /***/ },
-/* 481 */
+/* 482 */
 /***/ function(module, exports, __webpack_require__) {
 
 	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -41373,152 +41478,6 @@
 
 
 /***/ },
-/* 482 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(298);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactScroll = __webpack_require__(469);
-	
-	var _reactScroll2 = _interopRequireDefault(_reactScroll);
-	
-	var _jquery = __webpack_require__(481);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-	
-	var Header = function (_React$Component) {
-	  _inherits(Header, _React$Component);
-	
-	  function Header() {
-	    _classCallCheck(this, Header);
-	
-	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this));
-	
-	    _this.state = {
-	      scroll: _reactScroll2.default.animateScroll,
-	      message: null
-	    };
-	    return _this;
-	  }
-	
-	  _createClass(Header, [{
-	    key: 'componentDidMount',
-	    value: function componentDidMount() {
-	      this.fetch();
-	    }
-	  }, {
-	    key: 'fetch',
-	    value: function fetch() {
-	      var _this2 = this;
-	
-	      var url = '/data.json';
-	      var obj = {
-	        url: url
-	      };
-	      var xhr = _jquery2.default.ajax(obj);
-	      xhr.done(function (data) {
-	        return _this2.setState({ message: data.header.message });
-	      });
-	    }
-	  }, {
-	    key: 'handleClick',
-	    value: function handleClick(e) {
-	      e.preventDefault();
-	      this.state.scroll.scrollTo((0, _jquery2.default)(e.target.hash).offset().top);
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this3 = this;
-	
-	      return _react2.default.createElement(
-	        'header',
-	        null,
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'container' },
-	          _react2.default.createElement(
-	            'div',
-	            { className: 'row' },
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-7' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'header-content' },
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'header-content-inner' },
-	                  _react2.default.createElement(
-	                    'h1',
-	                    null,
-	                    this.state.message
-	                  ),
-	                  _react2.default.createElement(
-	                    'a',
-	                    {
-	                      onClick: function onClick(e) {
-	                        return _this3.handleClick(e);
-	                      },
-	                      href: '#download',
-	                      className: 'btn btn-outline btn-xl page-scroll'
-	                    },
-	                    'Start Now for Free!'
-	                  )
-	                )
-	              )
-	            ),
-	            _react2.default.createElement(
-	              'div',
-	              { className: 'col-sm-5' },
-	              _react2.default.createElement(
-	                'div',
-	                { className: 'device-container' },
-	                _react2.default.createElement(
-	                  'div',
-	                  { className: 'device-mockup iphone6_plus portrait white' },
-	                  _react2.default.createElement(
-	                    'div',
-	                    { className: 'device' },
-	                    _react2.default.createElement(
-	                      'div',
-	                      { className: 'screen' },
-	                      _react2.default.createElement('img', { src: 'img/demo-screen-1.jpg', className: 'img-responsive', alt: '' })
-	                    )
-	                  )
-	                )
-	              )
-	            )
-	          )
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return Header;
-	}(_react2.default.Component);
-	
-	exports.default = Header;
-
-/***/ },
 /* 483 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -41628,7 +41587,7 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _jquery = __webpack_require__(481);
+	var _jquery = __webpack_require__(482);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
 	

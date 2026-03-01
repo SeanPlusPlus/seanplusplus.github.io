@@ -6,7 +6,7 @@ date: 2026-03-02
 
 *How control changes when systems start making their own decisions.*
 
-We built systems we could predict. Then we built agents that explore, combine tools creatively, and attempt actions we never anticipated. If you can't predict what it will do, how do you control it?
+We built systems we could predict. Then we built agents that explore, combine tools creatively, and attempt actions we never anticipated. If you can't predict what it will do, how do you control it? Three control planes give you the answer: observability, evaluation, and governance.
 
 ## Observability
 

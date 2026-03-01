@@ -1,0 +1,18 @@
+# Site settings
+title: Sean Stephenson blog
+email:
+description: "Musings of a Software Engineer."
+baseurl: ""
+url: "https://seanplusplus.github.io"
+twitter_username: sikidalos
+github_username: seanplusplus
+
+# Build settings
+markdown: kramdown
+permalink: pretty
+
+highlighter: rouge
+kramdown:
+  input: GFM
+  auto_ids: true
+  syntax_highlighter: rouge

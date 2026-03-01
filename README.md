@@ -1,3 +1,3 @@
-# SeanPlusPlus
+# seanplusplus.github.io
 
-_my site_ 
+Personal blog. Powered by Jekyll.

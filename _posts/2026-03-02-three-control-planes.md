@@ -6,7 +6,7 @@ date: 2026-03-02
 
 *How control changes when systems start making their own decisions.*
 
-We built systems we could predict. Then we built agents that explore, combine tools creatively, and attempt actions we never anticipated. If you can't predict what it will do, how do you control it? Three control planes give you the answer: observability, evaluation, and governance.
+Software used to be predictable. A request came in, a response went out, and the path between them was fixed. Agents are not like that. They explore. They combine tools in ways no one anticipated. They act on their own judgment. The old controls do not work when the system decides for itself. Three new control planes do: observability, evaluation, and governance.
 
 ## Observability
 

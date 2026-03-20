@@ -4,7 +4,7 @@ title: "Three Control Planes for Agentic Systems"
 date: 2026-03-02
 ---
 
-*How control changes when systems start making their own decisions.*
+How control changes when systems start making their own decisions.
 
 Software used to be predictable. A request came in, a response went out, and the path between them was fixed. Agents are not like that. They explore. They combine tools in ways no one anticipated. They act on their own judgment. The old controls do not work when the system decides for itself. Three new control planes do: observability, evaluation, and governance.
 

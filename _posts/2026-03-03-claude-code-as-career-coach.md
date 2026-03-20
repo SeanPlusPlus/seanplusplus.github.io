@@ -8,11 +8,17 @@ Shit happens. Reorgs hit your team. The AI tool you just got comfortable with is
 
 The stress is real. And if you're in tech right now, you're feeling it — the anxiety of an industry that won't sit still long enough for you to catch your breath.
 
-I feel all of this. I'm a dad, I've got 15+ years in this industry, and the stress is so viscerally real. But instead of letting the anxiety dictate my day and getting constantly sidetracked, I've built a daily accountability loop with Claude Code that keeps me oriented toward my north star, even when the HN front page and my Twitter timeline are doing everything they can to knock me off course.
+I live all of this. I'm a dad, I've got 15+ years in this industry, and it weighs on me viscerally. But instead of letting the anxiety dictate my day and getting constantly sidetracked, I've built a daily accountability loop with Claude Code that keeps me oriented toward my north star, even when the HN front page and my Twitter timeline are doing everything they can to knock me off course.
 
-The fuel is simple: I use Bear to track what I do each day. Quick bullets — the task, the meeting, the PR, whatever. I used to half-ass this with two or three items. Now that I'm running it through the system below, I track a dozen or more things daily. Each one gets a `[x]` when done, and anything that doesn't gets carried forward automatically. The coach sees it all, grades it against my frameworks, and tells me where my time actually went versus where I said it should go. Five weeks in and 22 daily logs later, I can see patterns I never would have caught on my own. Carry-forwards that would have quietly died now have a system holding me to them. Days that felt unproductive turn out to be fine. Days that felt great sometimes aren't. The data doesn't lie, and having something review it honestly every single day changes how you show up the next morning.
+The fuel is simple: I use Bear to track what I do each day. Quick bullets — the task, the meeting, the PR, whatever. I used to half-ass this with two or three items. Now that I'm running it through the system below, I track a dozen or more things daily. Each one gets a `[x]` when done, and anything that doesn't gets carried forward.
+
+The coach sees it all, grades it against my frameworks, and tells me where my time actually went versus where I said it should go. Carry-forwards that would have quietly died now have a system holding me to them.
+
+Five weeks in and 20+ daily logs later, I can see patterns I never would have caught on my own. Days that felt unproductive turn out to be fine. Days that felt great sometimes aren't. The data doesn't lie, and having something review it honestly every single day changes how you show up the next morning.
 
 ## The System
+
+Drop this into a fresh repo, fire up Claude Code, and start coaching yourself.
 
 `OVERVIEW.md`
 
@@ -233,3 +239,5 @@ The value isn't the AI. It's the **structured accountability loop**. The framewo
 
 Claude Code is the delivery mechanism. The system is the structure.
 ````
+
+That's it. Go build yours.

@@ -223,6 +223,8 @@ a:visited { color: #205caa; }
   border-radius: 3px;
   font-size: 15px;
   overflow: auto;
+  white-space: pre-wrap;
+  word-wrap: break-word;
 }
 
 .post code { padding: 1px 5px; }

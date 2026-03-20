@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Claude Code as Career Coach"
-date: 2026-03-03
+date: 2026-03-20
 ---
 
 Shit happens. Reorgs hit your team. The AI tool you just got comfortable with is already yesterday's news. The macro landscape shifts and suddenly the five-year plan you had feels like fiction.

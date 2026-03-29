@@ -216,6 +216,9 @@ a:visited { color: #205caa; }
 .post-content table {
   border-collapse: collapse;
   width: 100%;
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .post-content th,

@@ -65,8 +65,6 @@ a:visited { color: #205caa; }
   line-height: 56px;
 }
 
-.site-nav .menu-icon { display: none; }
-
 .site-nav .page-link {
   margin-left: 20px;
   color: #727272;
@@ -215,6 +213,23 @@ a:visited { color: #205caa; }
 .post-content ul,
 .post-content ol { padding-left: 20px; }
 
+.post-content table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.post-content th,
+.post-content td {
+  border: 1px solid #e8e8e8;
+  padding: 8px 12px;
+  text-align: left;
+}
+
+.post-content th {
+  background-color: #f6f6f6;
+  font-weight: 400;
+}
+
 .post pre,
 .post code {
   border: 1px solid #d5d5e9;
@@ -344,36 +359,8 @@ a:visited { color: #205caa; }
 
 @media screen and (max-width: 600px) {
   .wrap { padding: 0 12px; }
-  .site-nav {
-    position: absolute;
-    z-index: 10;
-    top: 14px; right: 8px;
-    background-color: white;
-    border-radius: 5px;
-    border: 1px solid #e8e8e8;
-  }
-  .site-nav .menu-icon {
-    display: block;
-    font-size: 24px;
-    color: #505050;
-    float: right;
-    width: 36px;
-    text-align: center;
-    line-height: 36px;
-  }
-  .site-nav .menu-icon svg { width: 18px; height: 16px; }
-  .site-nav .trigger {
-    clear: both;
-    margin-bottom: 5px;
-    display: none;
-  }
-  .site-nav:hover .trigger { display: block; }
   .site-nav .page-link {
-    display: block;
-    text-align: right;
-    line-height: 1.25;
-    padding: 5px 10px;
-    margin: 0;
+    margin-left: 10px;
   }
   .post-header h1 { font-size: 36px; }
   .post-content h2 { font-size: 28px; }

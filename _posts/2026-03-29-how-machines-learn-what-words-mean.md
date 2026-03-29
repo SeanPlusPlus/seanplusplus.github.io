@@ -67,9 +67,9 @@ The cat example is cute, but the real payoff is when you embed things that matte
 
 ```typescript
 const tickets = [
-  { id: "PROJ-101", summary: "Perf: Lazy-load hero image on landing page" },
-  { id: "PROJ-201", summary: "Bug: useMemo dependency array missing in CartProvider" },
-  { id: "PROJ-301", summary: "Integrate SonarQube static analysis into CI/CD pipeline" },
+  { id: "PROJ-101", summary: "Lazy-load hero image" },
+  { id: "PROJ-201", summary: "Fix useMemo in CartProvider" },
+  { id: "PROJ-301", summary: "Add SonarQube to CI/CD" },
   // ... 10 tickets total
 ];
 

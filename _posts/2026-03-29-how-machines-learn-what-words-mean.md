@@ -28,7 +28,7 @@ By mid-century, researchers could say "these 50 measurements are really driven b
 
 Here's where language enters the picture. In 1957, linguist J.R. Firth proposed that the meaning of a word is defined by the company it keeps — what words tend to appear nearby. "Cat" shows up near "fur," "purr," "pet." So does "kitten." "Spaceship" does not.
 
-Researchers started counting co-occurrences across huge text corpora. Each word becomes a long row of numbers. Words in similar contexts get similar rows. The rows are enormous and sparse, so they applied the same compression trick: **Latent Semantic Analysis** used SVD (a cousin of PCA) to compress each word down to a dense vector of ~300 numbers.
+Researchers started counting co-occurrences across huge text corpora. Each word becomes a long row of numbers. Words in similar contexts get similar rows. The rows are enormous and sparse, so they applied the same compression trick: **Latent Semantic Analysis** used Singular Value Decomposition (a cousin of PCA) to compress each word down to a dense vector of ~300 numbers.
 
 Then in 2013, a team at Google changed everything. **Word2Vec** trained a small neural network to predict a word from its neighbors. The byproduct was a dense vector for every word — and these vectors captured relationships so well you could do arithmetic with meaning:
 
@@ -67,9 +67,9 @@ The cat example is cute, but the real payoff is when you embed things that matte
 
 ```typescript
 const tickets = [
-  { id: "PROJ-101", summary: "Perf: Lazy-load hero image on landing page" },
-  { id: "PROJ-201", summary: "Bug: useMemo dependency array missing in CartProvider" },
-  { id: "PROJ-301", summary: "Integrate SonarQube static analysis into CI/CD pipeline" },
+  { id: "PROJ-101", summary: "Lazy-load hero image" },
+  { id: "PROJ-201", summary: "Fix useMemo in CartProvider" },
+  { id: "PROJ-301", summary: "Add SonarQube to CI/CD" },
   // ... 10 tickets total
 ];
 

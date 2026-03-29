@@ -4,7 +4,9 @@ title: "How Machines Learn What Words Mean"
 date: 2026-03-29
 ---
 
-This started on a walk. Headphones in, group call with two buddies, roadie in hand, enjoying the night air on empty streets while nerding out about something that has no business being this interesting when you're 4 IPAs deep. I'd been building RAG tooling for an AI agent at work and had gotten into embedding models (the thing that turns text into numbers so machines can reason about meaning). One of my buddies, a psych PhD, heard me describe how they work and said "that's just factor analysis." I didn't know what that was. He started explaining: compressing a bunch of measurements down to a few hidden factors. I kept pushing. How does compressing survey data connect to something like GPT? He kept going. The third guy kept asking good questions. And the more we talked, the more I realized the lineage was obvious once you saw it. I slept on it. The next morning I wrote code. He was right.
+This started on a walk. Headphones in, group call with two buddies, roadie in hand, enjoying the night air on empty streets while nerding out about something that has no business being this interesting when you're 4 IPAs deep.
+
+I'd been building RAG tooling for an AI agent at work and had gotten into embedding models (the thing that turns text into numbers so machines can reason about meaning). One of my buddies, a psych PhD, heard me describe how they work and said "that's just factor analysis." I didn't know what that was. He started explaining: compressing a bunch of measurements down to a few hidden factors. I kept pushing. How does compressing survey data connect to something like GPT? He kept going. The third guy kept asking good questions. And the more we talked, the more I realized the lineage was obvious once you saw it. I slept on it. The next morning I wrote code. He was right.
 
 ## The Core Insight
 

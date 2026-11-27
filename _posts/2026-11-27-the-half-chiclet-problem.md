@@ -10,6 +10,8 @@ Alright, so my math buddy, being the absolute monster he is, went online, found 
 
 I walked away inspired. I don't have a math PhD, but I do have tools. This post is me working the problem with those tools, to understand it better instead of just knowing the answer.
 
+<img src="/images/half-chiclet-problem.webp" width="1440" height="960" alt="A paper pouch spills white gum pieces across graph paper. Whole pieces on the left give way to bitten halves on the right, under a blue curve that rises and falls.">
+
 ## The Setup
 
 Joe keeps a bag of Chiclets in his car. When we start, the bag holds `n` whole pieces and nothing else, with `n = 100` in our case. Joe only ever chews half a piece at a time. Whenever he wants gum, he reaches into the bag without looking and pulls out one item. He can't tell a whole piece from a half by feel, so every item in the bag is equally likely to be the one he grabs. If he pulls out a whole piece, he bites it in two, chews one half, and drops the other half back in. If he pulls out a half, he chews it.

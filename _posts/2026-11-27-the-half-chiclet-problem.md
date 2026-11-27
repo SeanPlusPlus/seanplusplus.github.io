@@ -157,6 +157,8 @@ The smooth path says 89.6. Brute force said the most common draw is 83 and the a
 
 But it doesn't land on the peak, and the chart shows why. The blue curve is the average bag. Real bags wobble around it, and our question asks when a wobbly path first touches the balance line. A bag that wobbles up early touches it early, and once it touches, it counts. So first touches tend to come before the smooth path gets there, which pulls the peak below 89.6. The smooth path also can't skip over the line the way a real bag can, so it has nothing to say about the bags that never balance.
 
+Think of the weather. If tomorrow averages 35°F, that's useful to know, but it can't tell you when the temperature first drops below freezing. A day that averages 35 might dip under 32 at 3 a.m., or at 6 a.m., or never. The average day crosses 32 once, at one moment. Real days cross it whenever their wiggles take them there, or not at all. The differential equation is the average day. Our question is about the wiggles.
+
 That's the trade. The differential equation nails the typical bag. Our question is about the first time, and the first time lives in the wobble.
 
 ## Getting Exact with Lean

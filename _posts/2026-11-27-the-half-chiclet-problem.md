@@ -4,7 +4,7 @@ title: "The Half-Chiclet Problem"
 date: 2026-11-27
 ---
 
-This one came up on vacation this week. A buddy of mine has a math PhD, and his brother, who I'll call Joe, keeps a bag of Chiclets in his car and only ever eats half a piece at a time. He reaches in without looking, bites a whole one in two, and drops the other half back in. Joe turned that habit into a question for his brother: how many grabs until the bag holds exactly as many wholes as halves? My buddy worked it out, then told me the story over a couple of beers.
+This one came up on vacation this week. A buddy of mine has a math PhD, and his brother, who I'll call Joe, keeps a bag of Chiclets in his car and only ever chews half a piece at a time. He reaches in without looking, bites a whole one in two, and drops the other half back in. Joe turned that habit into a question for his brother: how many grabs until the bag holds exactly as many wholes as halves? My buddy worked it out, then told me the story over a couple of beers.
 
 Alright, so my math buddy, being the absolute monster he is, went online, found a TI-84 emulator, programmed the problem into it, and got the answer. Then he kept going with an LLM and found that a differential equation describes it too.
 
@@ -12,9 +12,9 @@ I walked away inspired. I don't have a math PhD, but I do have tools. This post 
 
 ## The Setup
 
-Joe keeps a bag of Chiclets in his car. When we start, the bag holds `n` whole pieces and nothing else, with `n = 100` in our case. Joe only ever eats half a piece at a time. Whenever he wants gum, he reaches into the bag without looking and pulls out one item. He can't tell a whole piece from a half by feel, so every item in the bag is equally likely to be the one he grabs. If he pulls out a whole piece, he bites it in two, eats one half, and drops the other half back in. If he pulls out a half, he eats it.
+Joe keeps a bag of Chiclets in his car. When we start, the bag holds `n` whole pieces and nothing else, with `n = 100` in our case. Joe only ever chews half a piece at a time. Whenever he wants gum, he reaches into the bag without looking and pulls out one item. He can't tell a whole piece from a half by feel, so every item in the bag is equally likely to be the one he grabs. If he pulls out a whole piece, he bites it in two, chews one half, and drops the other half back in. If he pulls out a half, he chews it.
 
-We can describe the bag at any moment by two numbers: `w`, the count of whole pieces, and `h`, the count of halves. The bag starts at `(n, 0)`. On any draw, Joe picks a whole with probability `w / (w + h)` and a half with probability `h / (w + h)`. Picking a whole moves the bag to `(w - 1, h + 1)`, and picking a half moves it to `(w, h - 1)`. His first draw is always a whole, since no halves exist yet. Each whole piece takes exactly two draws to finish, one to split it and one to eat the leftover half, so the bag is empty after exactly `2n` draws however the luck falls. The number of wholes never goes up, the number of halves rises or falls by one with each draw, and the bag always ends at `(0, 0)`.
+We can describe the bag at any moment by two numbers: `w`, the count of whole pieces, and `h`, the count of halves. The bag starts at `(n, 0)`. On any draw, Joe picks a whole with probability `w / (w + h)` and a half with probability `h / (w + h)`. Picking a whole moves the bag to `(w - 1, h + 1)`, and picking a half moves it to `(w, h - 1)`. His first draw is always a whole, since no halves exist yet. Each whole piece takes exactly two draws to finish, one to split it and one to chew the leftover half, so the bag is empty after exactly `2n` draws however the luck falls. The number of wholes never goes up, the number of halves rises or falls by one with each draw, and the bag always ends at `(0, 0)`.
 
 ## The Question
 
@@ -73,7 +73,7 @@ average draw: 92.7
 
 Draw 83 wins, edging out 86 by two bags and 80 by six. The pile climbs fast off the 50-draw floor, peaks in the low 80s, and trails off through the 100s. The average, 92.7, gets dragged right by that tail and by a little cluster of late bloomers at 191 to 197, bags that dodged balance almost to the end. Another 72 bags never balanced at all.
 
-The bars only sit on every third draw, and that's just bookkeeping. Getting to `(k, k)` takes `n - k` wholes split plus `n - 2k` halves eaten, which is `2n - 3k` draws. Each step down in `k` adds three.
+The bars only sit on every third draw, and that's just bookkeeping. Getting to `(k, k)` takes `n - k` wholes split plus `n - 2k` halves chewed, which is `2n - 3k` draws. Each step down in `k` adds three.
 
 ## Brute Force: Pros and Cons
 

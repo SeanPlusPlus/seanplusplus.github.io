@@ -26,9 +26,9 @@ The fastest it can happen: Joe pulls a whole 50 times in a row, and on draw 50 t
 
 So the answer comes as a distribution. Run a lot of bags, record the draw where each one first balances, and plot it. The tallest bar is our answer.
 
-## Brute Force First
+## Monte Carlo First
 
-Before borrowing any of my buddy's tricks, here's my instinct: brute force the thing. Simulate Joe emptying a bag, note the draw where it first balances, do that for 1,000 bags, and look at the pile.
+Before borrowing any of my buddy's tricks, here's my instinct: brute force the thing. Simulate Joe emptying a bag, note the draw where it first balances, do that for 1,000 bags, and look at the pile. This kind of brute force has a name, a Monte Carlo simulation, after the casino in Monaco, because the answer comes from rolling dice over and over.
 
 ```python
 import random
@@ -77,7 +77,7 @@ Draw 83 wins, edging out 86 by two bags and 80 by six. The pile climbs fast off 
 
 The bars only sit on every third draw, and that's just bookkeeping. Getting to `(k, k)` takes `n - k` wholes split plus `n - 2k` halves chewed, which is `2n - 3k` draws. Each step down in `k` adds three.
 
-## Brute Force: Pros and Cons
+## Monte Carlo: Pros and Cons
 
 This is the programmer move. It works, and it's also kind of meathead.
 
@@ -270,6 +270,10 @@ To be clear about the limits: Lean proved the bookkeeping, not the probabilities
 
 ## Three Tools, Three Answers
 
-Brute force told me what happens: a peak in the low 80s, a long tail, and some bags that never balance. The differential equation told me where the typical bag balances, at `n(2 - 3/e)`, and lining it up against brute force showed why first balances come a little earlier. Lean gave me the exact numbers and turned what I'd noticed into things that can't be otherwise.
+The first approach was a Monte Carlo simulation in Python. It emptied 1,000 random bags and noted where each one first balanced, which put the peak at draw 83, the average near 93, and about 7% of bags never balancing. Monte Carlo is a poll. Ask 1,000 voters instead of the whole country and you get close, with a margin of error, and a different 1,000 voters might move the result a little.
+
+The second was the differential equation, solved with SymPy. It follows the drift of the average bag and says that bag balances on draw `n(2 - 3/e)`, about 89.6 for Joe's bag. It's the forecast from earlier. It describes the average day, for any bag size, but it can't tell you when the wiggles first cross the line. Lining it up against the simulation is what showed why first balances come a little earlier.
+
+The third was Lean. It tracked every possible bag as an exact fraction, which pins the peak at draw 83 (8.38%), the average for bags that balance at 94.2, and the chance of never balancing at 8.13%. Then it proved the patterns: balances land on every third draw, never before draw 50 and never after 197. Lean is the auditor. Instead of spot-checking the books, it goes through every line to the penny, then signs off on rules that hold for every bag size, not only the one it counted.
 
 My buddy got there first with a TI-84 emulator. I needed three tools and a blog post. Joe still chews half a Chiclet at a time.

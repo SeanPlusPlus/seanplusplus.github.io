@@ -159,6 +159,113 @@ But it doesn't land on the peak, and the chart shows why. The blue curve is the 
 
 That's the trade. The differential equation nails the typical bag. Our question is about the first time, and the first time lives in the wobble.
 
-## Next Up
+## Getting Exact with Lean
 
-_Coming soon: getting exact with Lean._
+Brute force gave a noisy answer to the real question. The differential equation gave a clean answer to a slightly different one. What I wanted was the exact answer to the real question, plus some certainty about the patterns I'd spotted in that first chart. That's where Lean comes in.
+
+### What's Lean?
+
+Lean is two things in one. It's a functional programming language, in the same family as Haskell. It's also a proof assistant: a program that checks mathematical proofs step by step and refuses to accept one with a gap in it. It started at Microsoft Research with Leonardo de Moura and is now developed by the nonprofit Lean FRO. Working mathematicians use it to check serious research, and its community library, Mathlib, covers a big chunk of undergraduate math. I've been working through *Functional Programming in Lean* on the side, so this felt like the right excuse.
+
+We'll use both halves. First the programming language, to compute the exact answer. Then the proof assistant, to prove the patterns.
+
+### Every Bag at Once
+
+Brute force rolls dice, one random bag at a time, 1,000 times. The exact approach rolls nothing. After each draw it keeps a list of every bag that could exist and exactly how likely each one is, as a fraction. It starts with a single bag, `(100, 0)`, at probability 1. Each draw splits every bag into its possible next bags and multiplies the probabilities along the way. Any probability that lands on a balance gets set aside in that draw's bucket. When the bag runs out, the buckets are the answer, and whatever never got set aside is the chance of never balancing.
+
+The heart of it is one function:
+
+```lean
+structure Bag where
+  w : Nat  -- wholes
+  h : Nat  -- halves
+deriving BEq
+
+/-- Where one grab can take the bag,
+and how likely each outcome is. -/
+def grabs (b : Bag) :
+    List (Bag × Rat) :=
+  let total : Rat := b.w + b.h
+  let split :=
+    [(⟨b.w - 1, b.h + 1⟩, b.w / total)]
+  let chew :=
+    [(⟨b.w, b.h - 1⟩, b.h / total)]
+  (if b.w > 0 then split else []) ++
+  (if b.h > 0 then chew else [])
+```
+
+`Rat` is Lean's exact fraction type. Two-thirds stays `2/3` the whole way through, never `0.6666667`. The rest is bookkeeping: a function that runs `grabs` on every bag for one draw, and a loop that does that `2n` times. About 40 lines in all.
+
+Lean also lets tests live right in the code. `#guard` checks a claim while the file compiles, and the build fails if the claim is false:
+
+```lean
+#guard firstBalance 3 = [(3, 7/9)]
+#guard neverBalance 3 = 2/9
+#guard mostLikely 100 = some 83
+```
+
+The three-piece bag is small enough to check by hand. From `(3, 0)` the first grab always splits, leaving `(2, 1)`. From there, Joe either splits again (chance 2/3) and then has to chew a half (2/3 again), or he chews the half (1/3) and the next grab is a sure split onto `(1, 1)`. That's 2/3 × 2/3 + 1/3 = 7/9, balancing on draw 3. Lean agrees.
+
+Here's Joe's bag, exactly:
+
+<div><svg viewBox="0 0 640 300" role="img" aria-label="Exact distribution of the first-balance draw for a 100-piece bag. The most likely first balance is draw 83; 8.1% of bags never balance." style="width:100%;height:auto;display:block;font-family:var(--mono)"><line x1="44" x2="612" y1="246.0" y2="246.0" stroke="#ececef" stroke-width="1"/><text x="38.0" y="251.0" text-anchor="end" fill="#6b7280" font-size="15" font-weight="400">0%</text><line x1="44" x2="612" y1="203.6" y2="203.6" stroke="#ececef" stroke-width="1"/><text x="38.0" y="208.6" text-anchor="end" fill="#6b7280" font-size="15" font-weight="400">2%</text><line x1="44" x2="612" y1="161.2" y2="161.2" stroke="#ececef" stroke-width="1"/><text x="38.0" y="166.2" text-anchor="end" fill="#6b7280" font-size="15" font-weight="400">4%</text><line x1="44" x2="612" y1="118.8" y2="118.8" stroke="#ececef" stroke-width="1"/><text x="38.0" y="123.8" text-anchor="end" fill="#6b7280" font-size="15" font-weight="400">6%</text><line x1="44" x2="612" y1="76.4" y2="76.4" stroke="#ececef" stroke-width="1"/><text x="38.0" y="81.4" text-anchor="end" fill="#6b7280" font-size="15" font-weight="400">8%</text><line x1="44" x2="612" y1="34.0" y2="34.0" stroke="#ececef" stroke-width="1"/><text x="38.0" y="39.0" text-anchor="end" fill="#6b7280" font-size="15" font-weight="400">10%</text><path d="M45.0,246.0V246.0Q45.0,246.0 45.0,246.0H53.5Q53.5,246.0 53.5,246.0V246.0Z" fill="#a9c1f5"><title>draw 50: 0.00%</title></path><text x="49.3" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">50</text><path d="M55.5,246.0V246.0Q55.5,246.0 55.5,246.0H64.0Q64.0,246.0 64.0,246.0V246.0Z" fill="#a9c1f5"><title>draw 53: 0.00%</title></path><path d="M66.0,246.0V245.8Q66.0,245.5 66.3,245.5H74.3Q74.6,245.5 74.6,245.8V246.0Z" fill="#a9c1f5"><title>draw 56: 0.02%</title></path><path d="M76.6,246.0V244.6Q76.6,243.2 78.0,243.2H83.7Q85.1,243.2 85.1,244.6V246.0Z" fill="#a9c1f5"><title>draw 59: 0.13%</title></path><path d="M87.1,246.0V239.1Q87.1,236.1 90.1,236.1H92.6Q95.6,236.1 95.6,239.1V246.0Z" fill="#a9c1f5"><title>draw 62: 0.47%</title></path><path d="M97.6,246.0V223.9Q97.6,220.9 100.6,220.9H103.1Q106.1,220.9 106.1,223.9V246.0Z" fill="#a9c1f5"><title>draw 65: 1.18%</title></path><path d="M108.1,246.0V199.2Q108.1,196.2 111.1,196.2H113.6Q116.6,196.2 116.6,199.2V246.0Z" fill="#a9c1f5"><title>draw 68: 2.35%</title></path><path d="M118.6,246.0V167.0Q118.6,164.0 121.6,164.0H124.1Q127.1,164.0 127.1,167.0V246.0Z" fill="#a9c1f5"><title>draw 71: 3.87%</title></path><path d="M129.1,246.0V132.5Q129.1,129.5 132.1,129.5H134.7Q137.7,129.5 137.7,132.5V246.0Z" fill="#a9c1f5"><title>draw 74: 5.50%</title></path><path d="M139.7,246.0V102.0Q139.7,99.0 142.7,99.0H145.2Q148.2,99.0 148.2,102.0V246.0Z" fill="#a9c1f5"><title>draw 77: 6.93%</title></path><path d="M150.2,246.0V80.8Q150.2,77.8 153.2,77.8H155.7Q158.7,77.8 158.7,80.8V246.0Z" fill="#a9c1f5"><title>draw 80: 7.93%</title></path><text x="154.4" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">80</text><path d="M160.7,246.0V71.3Q160.7,68.3 163.7,68.3H166.2Q169.2,68.3 169.2,71.3V246.0Z" fill="#2563eb"><title>draw 83: 8.38%</title></path><text x="165.0" y="60.3" text-anchor="middle" fill="#1c1c1e" font-size="15" font-weight="600">draw 83 · 8.38%</text><path d="M171.2,246.0V73.4Q171.2,70.4 174.2,70.4H176.7Q179.7,70.4 179.7,73.4V246.0Z" fill="#a9c1f5"><title>draw 86: 8.28%</title></path><path d="M181.7,246.0V84.8Q181.7,81.8 184.7,81.8H187.3Q190.3,81.8 190.3,84.8V246.0Z" fill="#a9c1f5"><title>draw 89: 7.74%</title></path><path d="M192.3,246.0V102.6Q192.3,99.6 195.3,99.6H197.8Q200.8,99.6 200.8,102.6V246.0Z" fill="#a9c1f5"><title>draw 92: 6.91%</title></path><path d="M202.8,246.0V123.6Q202.8,120.6 205.8,120.6H208.3Q211.3,120.6 211.3,123.6V246.0Z" fill="#a9c1f5"><title>draw 95: 5.92%</title></path><path d="M213.3,246.0V145.1Q213.3,142.1 216.3,142.1H218.8Q221.8,142.1 221.8,145.1V246.0Z" fill="#a9c1f5"><title>draw 98: 4.90%</title></path><path d="M223.8,246.0V165.3Q223.8,162.3 226.8,162.3H229.3Q232.3,162.3 232.3,165.3V246.0Z" fill="#a9c1f5"><title>draw 101: 3.95%</title></path><path d="M234.3,246.0V183.2Q234.3,180.2 237.3,180.2H239.9Q242.9,180.2 242.9,183.2V246.0Z" fill="#a9c1f5"><title>draw 104: 3.10%</title></path><path d="M244.9,246.0V198.4Q244.9,195.4 247.9,195.4H250.4Q253.4,195.4 253.4,198.4V246.0Z" fill="#a9c1f5"><title>draw 107: 2.39%</title></path><path d="M255.4,246.0V210.7Q255.4,207.7 258.4,207.7H260.9Q263.9,207.7 263.9,210.7V246.0Z" fill="#a9c1f5"><title>draw 110: 1.81%</title></path><text x="259.6" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">110</text><path d="M265.9,246.0V220.4Q265.9,217.4 268.9,217.4H271.4Q274.4,217.4 274.4,220.4V246.0Z" fill="#a9c1f5"><title>draw 113: 1.35%</title></path><path d="M276.4,246.0V227.9Q276.4,224.9 279.4,224.9H281.9Q284.9,224.9 284.9,227.9V246.0Z" fill="#a9c1f5"><title>draw 116: 0.99%</title></path><path d="M286.9,246.0V233.6Q286.9,230.6 289.9,230.6H292.4Q295.4,230.6 295.4,233.6V246.0Z" fill="#a9c1f5"><title>draw 119: 0.73%</title></path><path d="M297.4,246.0V237.8Q297.4,234.8 300.4,234.8H303.0Q306.0,234.8 306.0,237.8V246.0Z" fill="#a9c1f5"><title>draw 122: 0.53%</title></path><path d="M308.0,246.0V240.9Q308.0,237.9 311.0,237.9H313.5Q316.5,237.9 316.5,240.9V246.0Z" fill="#a9c1f5"><title>draw 125: 0.38%</title></path><path d="M318.5,246.0V243.1Q318.5,240.1 321.4,240.1H324.1Q327.0,240.1 327.0,243.1V246.0Z" fill="#a9c1f5"><title>draw 128: 0.28%</title></path><path d="M329.0,246.0V243.8Q329.0,241.7 331.2,241.7H335.4Q337.5,241.7 337.5,243.8V246.0Z" fill="#a9c1f5"><title>draw 131: 0.20%</title></path><path d="M339.5,246.0V244.4Q339.5,242.8 341.1,242.8H346.4Q348.0,242.8 348.0,244.4V246.0Z" fill="#a9c1f5"><title>draw 134: 0.15%</title></path><path d="M350.0,246.0V244.8Q350.0,243.6 351.2,243.6H357.4Q358.6,243.6 358.6,244.8V246.0Z" fill="#a9c1f5"><title>draw 137: 0.11%</title></path><path d="M360.6,246.0V245.1Q360.6,244.2 361.5,244.2H368.2Q369.1,244.2 369.1,245.1V246.0Z" fill="#a9c1f5"><title>draw 140: 0.09%</title></path><text x="364.8" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">140</text><path d="M371.1,246.0V245.3Q371.1,244.5 371.8,244.5H378.9Q379.6,244.5 379.6,245.3V246.0Z" fill="#a9c1f5"><title>draw 143: 0.07%</title></path><path d="M381.6,246.0V245.4Q381.6,244.8 382.2,244.8H389.5Q390.1,244.8 390.1,245.4V246.0Z" fill="#a9c1f5"><title>draw 146: 0.06%</title></path><path d="M392.1,246.0V245.5Q392.1,244.9 392.6,244.9H400.1Q400.6,244.9 400.6,245.5V246.0Z" fill="#a9c1f5"><title>draw 149: 0.05%</title></path><path d="M402.6,246.0V245.5Q402.6,245.0 403.1,245.0H410.7Q411.1,245.0 411.1,245.5V246.0Z" fill="#a9c1f5"><title>draw 152: 0.05%</title></path><path d="M413.1,246.0V245.5Q413.1,245.1 413.6,245.1H421.2Q421.7,245.1 421.7,245.5V246.0Z" fill="#a9c1f5"><title>draw 155: 0.04%</title></path><path d="M423.7,246.0V245.5Q423.7,245.1 424.1,245.1H431.7Q432.2,245.1 432.2,245.5V246.0Z" fill="#a9c1f5"><title>draw 158: 0.04%</title></path><path d="M434.2,246.0V245.5Q434.2,245.0 434.7,245.0H442.2Q442.7,245.0 442.7,245.5V246.0Z" fill="#a9c1f5"><title>draw 161: 0.05%</title></path><path d="M444.7,246.0V245.5Q444.7,245.0 445.2,245.0H452.7Q453.2,245.0 453.2,245.5V246.0Z" fill="#a9c1f5"><title>draw 164: 0.05%</title></path><path d="M455.2,246.0V245.4Q455.2,244.8 455.8,244.8H463.2Q463.7,244.8 463.7,245.4V246.0Z" fill="#a9c1f5"><title>draw 167: 0.05%</title></path><path d="M465.7,246.0V245.3Q465.7,244.7 466.4,244.7H473.6Q474.3,244.7 474.3,245.3V246.0Z" fill="#a9c1f5"><title>draw 170: 0.06%</title></path><text x="470.0" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">170</text><path d="M476.3,246.0V245.2Q476.3,244.4 477.1,244.4H484.0Q484.8,244.4 484.8,245.2V246.0Z" fill="#a9c1f5"><title>draw 173: 0.08%</title></path><path d="M486.8,246.0V245.0Q486.8,244.0 487.8,244.0H494.3Q495.3,244.0 495.3,245.0V246.0Z" fill="#a9c1f5"><title>draw 176: 0.09%</title></path><path d="M497.3,246.0V244.7Q497.3,243.5 498.6,243.5H504.5Q505.8,243.5 505.8,244.7V246.0Z" fill="#a9c1f5"><title>draw 179: 0.12%</title></path><path d="M507.8,246.0V244.3Q507.8,242.6 509.5,242.6H514.6Q516.3,242.6 516.3,244.3V246.0Z" fill="#a9c1f5"><title>draw 182: 0.16%</title></path><path d="M518.3,246.0V243.6Q518.3,241.2 520.7,241.2H524.5Q526.9,241.2 526.9,243.6V246.0Z" fill="#a9c1f5"><title>draw 185: 0.23%</title></path><path d="M528.9,246.0V241.8Q528.9,238.8 531.9,238.8H534.4Q537.4,238.8 537.4,241.8V246.0Z" fill="#a9c1f5"><title>draw 188: 0.34%</title></path><path d="M539.4,246.0V237.3Q539.4,234.3 542.4,234.3H544.9Q547.9,234.3 547.9,237.3V246.0Z" fill="#a9c1f5"><title>draw 191: 0.55%</title></path><path d="M549.9,246.0V227.8Q549.9,224.8 552.9,224.8H555.4Q558.4,224.8 558.4,227.8V246.0Z" fill="#a9c1f5"><title>draw 194: 1.00%</title></path><path d="M560.4,246.0V202.5Q560.4,199.5 563.4,199.5H565.9Q568.9,199.5 568.9,202.5V246.0Z" fill="#a9c1f5"><title>draw 197: 2.19%</title></path><text x="564.7" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">197</text><path d="M602.5,246.0V76.7Q602.5,73.7 605.5,73.7H608.0Q611.0,73.7 611.0,76.7V246.0Z" fill="#c4c8cf"><title>never balanced: 8.13%</title></path><text x="606.7" y="267.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">never</text><text x="328.0" y="294.0" text-anchor="middle" fill="#6b7280" font-size="15" font-weight="400">draw on which the bag first balances</text></svg></div>
+
+The most likely first balance is draw 83, at 8.38%. A bag that balances does it on draw 94.2 on average, and 8.13% of bags never balance at all. Brute force said 83, 92.7, and 7.2%, so 1,000 bags nailed the peak and got the rest roughly right. For fun: written as a fraction, the exact chance of never balancing has a numerator 3,187 digits long, over a denominator of 3,188 digits. Good luck getting that out of a simulation.
+
+### Proving the Patterns
+
+Back at the brute-force chart, I noticed the bars only sit on every third draw, nothing shows up before draw 50, and nothing shows up after 197. Noticing isn't knowing, though. Maybe some weirder bag does something else. Lean can settle it, for every bag size at once.
+
+First, the rules of the bag go in as types. A `Step` is one grab, splitting a whole or chewing a half. `Reach n d b` means bag `b` is possible after `d` grabs, starting from `n` wholes.
+
+```lean
+/-- One grab: split a whole,
+or chew a half. -/
+inductive Step : Bag → Bag → Prop
+  | split {w h : Nat} :
+      Step ⟨w + 1, h⟩ ⟨w, h + 1⟩
+  | chew {w h : Nat} :
+      Step ⟨w, h + 1⟩ ⟨w, h⟩
+
+/-- From `n` wholes, bag `b` is
+possible after `d` grabs. -/
+inductive Reach (n : Nat) :
+    Nat → Bag → Prop
+  | start : Reach n 0 ⟨n, 0⟩
+  | grab {d : Nat} {b b' : Bag} :
+      Reach n d b → Step b b' →
+      Reach n (d + 1) b'
+```
+
+Then the key fact. Every grab either turns a whole into a half or gets rid of a half, so one particular count never changes:
+
+```lean
+theorem grabs_add_up
+    {n d : Nat} {b : Bag}
+    (r : Reach n d b) :
+    d + b.h + 2 * b.w = 2 * n := by
+  induction r with
+  | start => dsimp only; omega
+  | grab _ s ih =>
+    cases s <;> dsimp only at ih ⊢
+      <;> omega
+
+theorem balance_draw {n d k : Nat}
+    (r : Reach n d ⟨k, k⟩) :
+    d = 2 * n - 3 * k := by
+  have := grabs_add_up r
+  dsimp only at this
+  omega
+```
+
+In plain words, `grabs_add_up` says draws plus halves plus twice the wholes always equals `2n`. The proof is induction, which works like dominoes: show the claim holds at the start, show every grab keeps it true, and it holds forever. `omega` is Lean's built-in arithmetic solver, and it does the "keeps it true" algebra for both kinds of grab. Then `balance_draw` falls out in two lines. Set wholes and halves both to `k`, and the draw has to be `2n - 3k`. Two more short theorems of the same shape pin the floor and the ceiling: no bag balances before draw `n / 2` or after `2n - 3`.
+
+If any step were wrong, the file wouldn't compile. It compiles. For a 100-piece bag, that's every third draw, from 50 to 197, guaranteed.
+
+To be clear about the limits: Lean proved the bookkeeping, not the probabilities. The distribution comes from a program Lean runs, checked by those `#guard` tests. It's exact arithmetic, but it isn't a theorem about probability. Proving something like the smooth path from the last section would mean pulling in Mathlib, and that's a post of its own.
+
+## Three Tools, Three Answers
+
+Brute force told me what happens: a peak in the low 80s, a long tail, and some bags that never balance. The differential equation told me why the peak sits around `n(2 - 3/e)`, and why it misses a little. Lean gave me the exact numbers and turned what I'd noticed into things that can't be otherwise.
+
+My buddy got there first with a TI-84 emulator. I needed three tools and a blog post. Joe still chews half a Chiclet at a time.

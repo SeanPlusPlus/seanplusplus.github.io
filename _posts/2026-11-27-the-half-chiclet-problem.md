@@ -77,21 +77,11 @@ The bars only sit on every third draw, and that's just bookkeeping. Getting to `
 
 ## Brute Force: Pros and Cons
 
-This is the programmer move. It works, and it's also kind of meathead. Here's what it buys and what it doesn't.
+This is the programmer move. It works, and it's also kind of meathead.
 
-**Pros**
+The good part is how little it asks of you. It's about twenty lines, and the only math in it is "pick a random item." The code follows the story line for line, so if the story is right, the simulation is right, and that makes it hard to screw up. It also shows you the shape of the thing. I wouldn't have guessed the lopsided pile, the late cluster near draw 197, or the bags that never balance at all. And whatever the math says later has to agree with this chart, so the simulation doubles as a referee.
 
-- **Fast to write.** About twenty lines, and the only math is "pick a random item."
-- **Hard to get wrong.** The code follows the story line for line. If the story is right, the simulation is right.
-- **It shows the shape.** The lopsided pile, the late cluster near draw 197, the bags that never balance. I wouldn't have guessed any of that.
-- **It's a referee.** Whatever the math says later has to agree with this chart.
-
-**Cons**
-
-- **Noisy.** With 1,000 bags, draws 80, 83, and 86 are within a few bags of each other. A different seed could crown a different bar.
-- **One `n` at a time.** The answer for 100 pieces says nothing about 1,000 without rerunning.
-- **No why.** It tells you where the peak is, but not why it's there.
-- **No formula, no proof.** Only a pile of samples.
+The bad part is everything it can't tell you. It's noisy: with 1,000 bags, draws 80, 83, and 86 sit within a few bags of each other, and a different seed could crown a different bar. It answers one `n` at a time, so the result for 100 pieces says nothing about 1,000 without rerunning. It tells you where the peak is but not why it's there. And at the end you're holding a pile of samples, not a formula or a proof.
 
 Brute force answers what happens. The rest of this post is about why.
 

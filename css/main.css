@@ -245,12 +245,13 @@ a:visited { color: #205caa; }
   word-wrap: break-word;
 }
 
-.post code { padding: 1px 5px; }
+.post code { padding: 1px 5px; white-space: nowrap; }
 
 .post ul,
 .post ol { margin-left: 1.35em; }
 
 .post pre code {
+  white-space: inherit;
   border: 0;
   padding-right: 0;
   padding-left: 0;

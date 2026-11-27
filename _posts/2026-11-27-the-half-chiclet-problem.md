@@ -22,13 +22,13 @@ We can describe the bag at any moment by two numbers: `w`, the count of whole pi
 
 At some point the bag might hold exactly as many wholes as halves. That's the 50/50 moment, when Joe's next grab is a coin flip. The question is how many draws it takes to get there for the first time.
 
-The fastest it can happen: Joe pulls a whole 50 times in a row, and on draw 50 the bag sits at `(50, 50)`. The slowest: the bag dodges every balance until it's down to `(1, 1)`, on draw 197. Every bag that balances lands somewhere in that window. Some bags never balance at all. A whole draw shrinks the gap between wholes and halves by two, so the gap can jump from 1 straight to -1 and skip zero.
+The fastest it can happen: Joe pulls a whole 50 times in a row, and on draw 50 the bag sits at `(50, 50)`. The slowest: the bag dodges every balance until it's down to `(1, 1)`, on draw 197. Every bag that balances lands somewhere in that window. Some bags never balance at all. A whole draw shrinks the gap between wholes and halves by two, so the gap can jump from 1 straight to -1 and skip zero. A bag that skips can still climb back later, one chewed half at a time, but some run out of wholes first.
 
 So the answer comes as a distribution. Run a lot of bags, record the draw where each one first balances, and plot it. The tallest bar is our answer.
 
 ## Brute Force First
 
-Before hearing how my buddy cracked it, here's my instinct: brute force the thing. Simulate Joe emptying a bag, note the draw where it first balances, do that for 1,000 bags, and look at the pile.
+Before borrowing any of my buddy's tricks, here's my instinct: brute force the thing. Simulate Joe emptying a bag, note the draw where it first balances, do that for 1,000 bags, and look at the pile.
 
 ```python
 import random
@@ -93,15 +93,15 @@ Brute force told us what happens. My math buddy's second move, the differential 
 
 Any one bag is random. Averaged over lots of bags, though, the bag drifts in a predictable direction. On a given grab, Joe pulls a whole with probability `w / (w + h)`. When that happens, wholes drop by one and halves rise by one. Otherwise he pulls a half, and halves drop by one. Put those together and on an average grab the wholes go down by `w / (w + h)` and the halves change by `(w - h) / (w + h)`.
 
-We don't care how many grabs have gone by, though. We care how the halves move as the wholes get used up. So divide one change by the other. The messy `w + h` cancels and leaves something clean: for every whole that gets used up, the halves change by `h / w - 1`.
+We don't care how many grabs have gone by, though. We care how the halves move as the wholes get used up. So divide one change by the other. The messy `w + h` cancels and leaves something clean: for every whole that gets used up, the halves go up by `1 - h / w`. At the start there are no halves, so each whole used up adds a full half. By the time halves match wholes, it adds nothing.
 
-Here's the leap. Wholes and halves come in whole numbers, but in a 100-piece bag it does little harm to pretend they're smooth quantities that slide continuously. Make that leap and the rule becomes a differential equation:
+Here's the leap. Wholes and halves come in whole numbers, but in a 100-piece bag it does little harm to pretend they're smooth quantities that slide continuously. Make that leap and the rule becomes a differential equation. One wrinkle: math writes slopes in the direction of more wholes, not fewer, so the sign flips:
 
 ```text
 dh/dw = h/w - 1
 ```
 
-A differential equation is a rule for how one thing changes as another changes. Read this one as "the slope of the halves, as the wholes run down, is `h/w - 1`." Solving it means finding the curve that obeys that rule at every point, starting from where the bag starts, with `n` wholes and no halves.
+A differential equation is a rule for how one thing changes as another changes. Read `dh/dw` as "how much the halves change per extra whole." It's the same rule as before, measured in the other direction. Solving it means finding the curve that obeys that rule at every point, starting from where the bag starts, with `n` wholes and no halves.
 
 ### Enter SymPy
 
@@ -118,7 +118,7 @@ import sympy as sp
 w, n = sp.symbols("w n", positive=True)
 h = sp.Function("h")  # halves, as a function of wholes
 
-# The drift rule: halves change by h/w - 1 per whole used up
+# The drift rule: dh/dw = h/w - 1
 rule = sp.Eq(h(w).diff(w), h(w) / w - 1)
 
 # Solve it, starting from n wholes and zero halves
@@ -157,7 +157,7 @@ Here's the smooth path drawn against 20 simulated bags:
 
 The smooth path says 89.6. Brute force said the most common draw is 83 and the average is about 93. So the curve lands in the right neighborhood, and it hands us something brute force never could: a formula that works for any bag size. Double the bag and the balance point doubles with it.
 
-But it doesn't land on the peak, and the chart shows why. The blue curve is the average bag. Real bags wobble around it, and our question asks when a wobbly path first touches the balance line. A bag that wobbles up early touches it early, and once it touches, it counts. So first touches tend to come before the smooth path gets there, which pulls the peak below 89.6. The smooth path also can't skip over the line the way a real bag can, so it has nothing to say about the bags that never balance.
+But it doesn't land on the peak, and the chart shows why. The blue curve is the average bag. Real bags wobble around it, and our question asks when a wobbly path first touches the balance line. A bag that wobbles toward the line touches it early, and once it touches, it counts. A bag that wobbles away gets there late, and the later the stragglers arrive, the more spread out they get. So the pile is lopsided, with a tight bunch of early arrivals and a long tail of late ones. Leave out the late bloomers near the end and the middle of the main hump sits at 88.5, right next to the curve's 89.6. The peak of that lopsided pile sits to the left, at 83. The smooth path also can't skip over the line the way a real bag can, so it has nothing to say about the bags that never balance.
 
 Think of the weather. If tomorrow averages 35°F, that's useful to know, but it can't tell you when the temperature first drops below freezing. A day that averages 35 might dip under 32 at 3 a.m., or at 6 a.m., or never. The average day crosses 32 once, at one moment. Real days cross it whenever their wiggles take them there, or not at all. The differential equation is the average day. Our question is about the wiggles.
 
@@ -270,6 +270,6 @@ To be clear about the limits: Lean proved the bookkeeping, not the probabilities
 
 ## Three Tools, Three Answers
 
-Brute force told me what happens: a peak in the low 80s, a long tail, and some bags that never balance. The differential equation told me why the peak sits around `n(2 - 3/e)`, and why it misses a little. Lean gave me the exact numbers and turned what I'd noticed into things that can't be otherwise.
+Brute force told me what happens: a peak in the low 80s, a long tail, and some bags that never balance. The differential equation told me where the typical bag balances, at `n(2 - 3/e)`, and lining it up against brute force showed why first balances come a little earlier. Lean gave me the exact numbers and turned what I'd noticed into things that can't be otherwise.
 
 My buddy got there first with a TI-84 emulator. I needed three tools and a blog post. Joe still chews half a Chiclet at a time.

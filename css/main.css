@@ -389,6 +389,9 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .highlight .vi { color: #008080 }
 .highlight .il { color: #009999 }
 
+/* Rouge's Lean lexer predates Lean 4 and tags {, }, and ⊢ as errors */
+.language-lean .err { color: inherit; background-color: transparent; }
+
 
 /* media queries */
 /* ----------------------------------------------------------*/
@@ -410,6 +413,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 @media screen and (max-width: 600px) {
   body { font-size: 17px; }
   .wrap { padding: 0 16px; }
+  .post pre { font-size: 13px; padding: 12px 14px; }
   .page-content { padding: 32px 0; }
   .site-nav .page-link {
     margin-left: 10px;

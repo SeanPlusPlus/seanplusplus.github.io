@@ -4,7 +4,7 @@ title: "The Half-Chiclet Problem"
 date: 2026-11-27
 ---
 
-This one came up on vacation this week. A buddy of mine has a math PhD, and his brother, who I'll call Joe, keeps a bag of Chiclets in his car and only ever eats half a piece at a time. He reaches in without looking, bites a whole one in two, and drops the other half back in. Joe turned that habit into a question: how many grabs until the bag holds exactly as many wholes as halves? I had no idea. My buddy couldn't let it go.
+This one came up on vacation this week. A buddy of mine has a math PhD, and his brother, who I'll call Joe, keeps a bag of Chiclets in his car and only ever eats half a piece at a time. He reaches in without looking, bites a whole one in two, and drops the other half back in. Joe turned that habit into a question for his brother: how many grabs until the bag holds exactly as many wholes as halves? My buddy worked it out, then told me the whole story.
 
 Being the absolute monster he is, he went online, found a TI-84 emulator, programmed the problem into it, and got the answer. Then he kept going with an LLM and found that a differential equation describes it too.
 

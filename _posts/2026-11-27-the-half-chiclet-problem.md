@@ -87,7 +87,7 @@ Brute force answers what happens. The rest of this post is about why.
 
 ## Following the Drift
 
-Brute force told us what happens. My math buddy's second move, the differential equation, gets at why. It sounds scary, but the idea fits in a few paragraphs.
+Brute force told us what happens. My math buddy's second move, the differential equation, gets at why.
 
 Any one bag is random. Averaged over lots of bags, though, the bag drifts in a predictable direction. On a given grab, Joe pulls a whole with probability `w / (w + h)`. When that happens, wholes drop by one and halves rise by one. Otherwise he pulls a half, and halves drop by one. Put those together and on an average grab the wholes go down by `w / (w + h)` and the halves change by `(w - h) / (w + h)`.
 

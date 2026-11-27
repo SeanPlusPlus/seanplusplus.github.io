@@ -276,4 +276,21 @@ The second was the differential equation, solved with SymPy. It follows the drif
 
 The third was Lean. It tracked every possible bag as an exact fraction, which pins the peak at draw 83 (8.38%), the average for bags that balance at 94.2, and the chance of never balancing at 8.13%. Then it proved the patterns: balances land on every third draw, never before draw 50 and never after 197. Lean is the auditor. Instead of spot-checking the books, it goes through every line to the penny, then signs off on rules that hold for every bag size, not only the one it counted.
 
-My buddy got there first with a TI-84 emulator. I needed three tools and a blog post. Joe still chews half a Chiclet at a time.
+## A Night in Vegas
+
+Say a casino turns Joe's bag into a game. Every possible draw is a slot on the felt, you put $20 on one, and if the bag first balances on your draw, you win. Which slot do you take, the simulation's 83 or the smooth path's 89?
+
+Take 83. When every slot pays the same, the best bet is the slot most likely to hit, and Lean already handed us the exact odds for every slot on the board.
+
+| Draw | Chance it's the first balance |
+|---|---|
+| 83 | 8.38% |
+| 86 | 8.28% |
+| 80 | 7.93% |
+| 89 | 7.74% |
+| 92 | 6.91% |
+| never | 8.13% |
+
+The smooth path's 89 comes in fourth. It's a fine prediction for the average bag, but the bet is on the first time, and the first time comes early. Say the house pays 10 to 1 on every slot. Twenty dollars on 83 comes back as $18.44 on average, and $20 on 89 comes back as $17.04, so the 89 bettor loses almost twice as fast. Both bettors lose in the long run, of course. That's Vegas. The house would have to pay about 11 to 1 before 83 broke even.
+
+Two more tips for the table. Never bet on 88 or 90, since a balance only lands on every third draw and those slots can't win. And if the felt has a square for "never balances," it's the second-best bet in the house.
